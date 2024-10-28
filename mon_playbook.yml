@@ -4,6 +4,18 @@
   connection: ssh
   hosts: mes_machines
   remote_user: stamboue
+  become: true
   tasks:
     - name: Ping the system
       ansible.builtin.ping:
+    - name: Créer un fichier de test sur la machine cible
+      ansible.builtin.copy:
+        content: "Ceci est un fichier de test créé par Ansible."
+        dest: /tmp/fichier_test.txt
+        owner: stamboue
+        group: stamboue
+        mode: '0644'
+    - name: Installation de apach2
+      ansible.builtin.package:
+        name: apache2
+        state: present
